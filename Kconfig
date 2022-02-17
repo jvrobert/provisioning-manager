@@ -1,0 +1,7 @@
+menu "provisioning-manager configuration"
+
+    config PROVISIONING_MANAGER_FIRMWARE_URL
+        string "Firmware base URL"
+        help
+            Base URL, URL/firmware.txt should exist
+endmenu
