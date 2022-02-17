@@ -85,7 +85,7 @@ FirmwareInfo ProvisioningManager::GetFirmwareInfo()
     ret.Valid = false;
 
     char buf[64] = {0};
-    const std::string url = std::string(CONFIG_PROVISIONING_MANAGER_FIRMWARE_URL) + "/firmware.txt";
+    const std::string url = std::string(CONFIG_PROVISIONING_MANAGER_FIRMWARE_URL) + "/" + CONFIG_PROVISIONING_MANAGER_FIRMWARE_CONTROL_FILE;
     esp_http_client_config_t config = {
         .url = url.c_str(),
         .method = HTTP_METHOD_GET,

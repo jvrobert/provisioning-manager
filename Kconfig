@@ -3,5 +3,9 @@ menu "provisioning-manager configuration"
     config PROVISIONING_MANAGER_FIRMWARE_URL
         string "Firmware base URL"
         help
-            Base URL, URL/firmware.txt should exist
+            Base URL, URL/PROVISIONING_MANAGER_FIRMWARE_CONTROL_FILE should exist
+    config PROVISIONING_MANAGER_FIRMWARE_CONTROL_FILE
+        string "Firmware control filename, e.g. myapp_firmware.txt"
+        help
+            File should be of format: number relative_filename, e.g. 1 myfirmware.bin
 endmenu
