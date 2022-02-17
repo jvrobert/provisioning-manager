@@ -1,4 +1,4 @@
-idf_component_register(SRCS "src/ProvisioningManager.cpp"
+idf_component_register(SRCS "src/ProvisioningManager.cpp" "src/esp_qrcode_main.c" "src/qrcodegen.c"
                     INCLUDE_DIRS "include"
                     REQUIRES
                     nvs_flash
