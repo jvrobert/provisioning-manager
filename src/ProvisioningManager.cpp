@@ -186,7 +186,6 @@ void ProvisioningManager::ApplyFirmware(const FirmwareInfo &info)
     if (err != ESP_OK)
     {
         ESP_LOGE(TAG, "ApplyFirmware(): ESP HTTPS OTA Begin failed");
-        vTaskDelete(NULL);
         return;
     }
 
@@ -237,13 +236,11 @@ void ProvisioningManager::ApplyFirmware(const FirmwareInfo &info)
                 ESP_LOGE(TAG, "ApplyFirmware(): Image validation failed, image is corrupted");
             }
             ESP_LOGE(TAG, "ApplyFirmware(): ESP_HTTPS_OTA upgrade failed 0x%x", ota_finish_err);
-            vTaskDelete(NULL);
         }
     }
 finish_ota:
     esp_https_ota_abort(https_ota_handle);
     ESP_LOGE(TAG, "ApplyFirmware(): ESP_HTTPS_OTA upgrade failed");
-    vTaskDelete(NULL);
 }
 
 std::string ProvisioningManager::GetServiceName()
