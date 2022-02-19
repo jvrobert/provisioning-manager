@@ -26,9 +26,11 @@ ProvisioningManager *ProvisioningManager::GetInstance()
     return s_instance;
 }
 
-void ProvisioningManager::Start()
+void ProvisioningManager::Start(bool autoUpdate)
 {
-    GetInstance()->Initialize();
+    auto inst = GetInstance();
+    inst->m_autoUpdate = autoUpdate;
+    inst->Initialize();
 }
 
 esp_err_t ProvisioningManager::onHttpEvent(esp_http_client_event_t *evt)
@@ -409,6 +411,21 @@ void ProvisioningManager::Initialize()
 
     /* Wait for Wi-Fi connection */
     xEventGroupWaitBits(m_wifiEventGroup, WIFI_CONNECTED_EVENT, false, true, portMAX_DELAY);
+
+    if (m_autoUpdate)
+    {
+        xTaskCreate(FirmwareUpdater, "FirmwareUpdater", 2048*4, nullptr, tskIDLE_PRIORITY, &m_updateTask);
+    }
+}
+
+void ProvisioningManager::FirmwareUpdater(void*)
+{
+    auto me = ProvisioningManager::GetInstance();
+    for (;;)
+    {
+        me->UpdateFirmware();
+        vTaskDelay((CONFIG_PROVISIONING_MANAGER_AUTOUPDATE_INTERVAL * 1000) / portTICK_PERIOD_MS);
+    }
 }
 
 void ProvisioningManager::PrintQr(const char *name, const char *pop, const char *transport)

@@ -25,7 +25,7 @@ class ProvisioningManager
 {
 public:
     static ProvisioningManager *GetInstance();
-    static void Start();
+    static void Start(bool autoUpdate = false);
     unsigned GetFirmwareVersion() { return m_runningFwVersion; }
     void UpdateFirmware();
 protected:
@@ -38,6 +38,7 @@ protected:
     static esp_err_t CustomProvisioningDataHandler(uint32_t session_id, const uint8_t *inbuf, ssize_t inlen,
                                                    uint8_t **outbuf, ssize_t *outlen, void *priv_data);
 
+    static void FirmwareUpdater(void*);
     EventGroupHandle_t m_wifiEventGroup;
     std::string GetServiceName();
     void PrintQr(const char *name, const char *pop, const char *transport);
@@ -45,5 +46,7 @@ protected:
     static esp_err_t onHttpEvent(esp_http_client_event_t *evt);
     FirmwareInfo GetFirmwareInfo();
     unsigned m_runningFwVersion;
+    bool m_autoUpdate;
+    TaskHandle_t m_updateTask;
 
 };

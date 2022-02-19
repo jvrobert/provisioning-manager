@@ -8,4 +8,11 @@ menu "provisioning-manager configuration"
         string "Firmware control filename, e.g. myapp_firmware.txt"
         help
             File should be of format: number relative_filename, e.g. 1 myfirmware.bin
+            
+    config PROVISIONING_MANAGER_AUTOUPDATE_INTERVAL
+        int "Seconds between firmware scans"
+        default 30
+        range 30 1440
+        help
+            How long to wait between firmware update checks
 endmenu
