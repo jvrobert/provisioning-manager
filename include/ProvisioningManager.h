@@ -28,9 +28,9 @@ public:
     static void Start(bool autoUpdate = false);
     unsigned GetFirmwareVersion() { return m_runningFwVersion; }
     void UpdateFirmware();
+    std::string GetHostName();
 protected:
     ProvisioningManager();
-    std::string GetHostName();
     void Initialize();
     static ProvisioningManager* s_instance;
     static void ProvisioningEventHandler(void *arg, esp_event_base_t event_base,
